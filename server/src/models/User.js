@@ -63,6 +63,11 @@ const User = sequelize.define(
     },
   },
   {
+    indexes: [
+      {
+        fields: ['name'],
+      },
+    ],
     defaultScope: {
       attributes: { exclude: ['profileImageId'] },
       include: { association: 'profileImage' },
