@@ -1,11 +1,12 @@
-import bodyParser from 'body-parser';
-import Express from 'express';
+import compression from 'compression';
+import express from 'express';
 import session from 'express-session';
 
 import { apiRouter } from './routes/api';
 import { staticRouter } from './routes/static';
 
-const app = Express();
+const app = express();
+app.use(compression())
 
 app.set('trust proxy', true);
 
@@ -17,8 +18,8 @@ app.use(
     secret: 'secret',
   }),
 );
-app.use(bodyParser.json());
-app.use(bodyParser.raw({ limit: '10mb' }));
+app.use(express.json());
+app.use(express.raw({ limit: '10mb' }));
 
 app.use((_req, res, next) => {
   res.header({
