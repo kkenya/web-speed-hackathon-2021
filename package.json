@@ -11,5 +11,8 @@
   },
   "engines": {
     "node": "14.x.x"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.4"
   }
 }
