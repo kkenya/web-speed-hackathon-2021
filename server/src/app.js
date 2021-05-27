@@ -1,4 +1,4 @@
-import bodyParser from 'body-parser';
+import compression from 'compression';
 import Express from 'express';
 import session from 'express-session';
 
@@ -9,6 +9,7 @@ const app = Express();
 
 app.set('trust proxy', true);
 
+app.use(compression())
 app.use(
   session({
     proxy: true,
@@ -17,8 +18,8 @@ app.use(
     secret: 'secret',
   }),
 );
-app.use(bodyParser.json());
-app.use(bodyParser.raw({ limit: '10mb' }));
+app.use(Express.json());
+app.use(Express.raw({ limit: '10mb' }));
 
 app.use((_req, res, next) => {
   res.header({
