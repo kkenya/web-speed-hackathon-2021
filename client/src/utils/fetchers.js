@@ -8,7 +8,7 @@ async function fetchBinary(url) {
   const res = await fetch(url, {
     method: 'GET',
   });
-  const result = res.arrayBuffer();
+  const result = await res.arrayBuffer();
   return result;
 }
 
@@ -21,7 +21,7 @@ async function fetchJSON(url) {
   const res = await fetch(url, {
     method: 'GET',
   });
-  const result = res.json();
+  const result = await res.json();
   return result;
 }
 
