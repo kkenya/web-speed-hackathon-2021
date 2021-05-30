@@ -8,8 +8,10 @@ async function fetchBinary(url) {
   const res = await fetch(url, {
     method: 'GET',
   });
-  const result = await res.arrayBuffer();
-  return result;
+  if (res.ok) {
+    return await res.arrayBuffer();
+  }
+  return null;
 }
 
 /**
@@ -21,8 +23,10 @@ async function fetchJSON(url) {
   const res = await fetch(url, {
     method: 'GET',
   });
-  const result = await res.json();
-  return result;
+  if (res.ok) {
+    return await res.json();
+  }
+  return null;
 }
 
 /**
@@ -32,14 +36,17 @@ async function fetchJSON(url) {
  * @returns {Promise<T>}
  */
 async function sendFile(url, file) {
-  const result = await fetch(url, {
+  const res = await fetch(url, {
     body: file,
     headers: {
       'Content-Type': 'application/octet-stream',
     },
     method: 'POST',
   });
-  return result;
+  if (res.ok) {
+    return await res.json();
+  }
+  return null;
 }
 
 /**
@@ -53,7 +60,7 @@ async function sendJSON(url, data) {
   const uint8Array = new TextEncoder().encode(jsonString);
   const compressed = gzip(uint8Array);
 
-  const result = await fetch(url, {
+  const res = await fetch(url, {
     body: compressed,
     headers: {
       'Content-Encoding': 'gzip',
@@ -61,7 +68,10 @@ async function sendJSON(url, data) {
     },
     method: 'POST',
   });
-  return result;
+  if (res.ok) {
+    return await res.json();
+  }
+  return null;
 }
 
 export { fetchBinary, fetchJSON, sendFile, sendJSON };
